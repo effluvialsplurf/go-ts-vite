@@ -14,13 +14,15 @@ type frontendAppHandler struct {
 	index fs.FS
 }
 
-var tsHandler = frontendAppHandler{
-	index: nil,
-}
+var tsHandler = frontendAppHandler{}
 
 // handlers
 func (h *frontendAppHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	http.FileServer(http.FS(tsHandler.index)).ServeHTTP(w, r)
+	//file, err := fs.Sub(ui.Index, ".")
+	//if err != nil {
+	//	panic(err)
+	//}
+	http.FileServer(http.FS(ui.Index)).ServeHTTP(w, r)
 }
 
 // url paths
@@ -29,14 +31,6 @@ func makeUrls() {
 }
 
 func main() {
-	var err error = nil
-
-	// get filesystem for frontend app
-	tsHandler.index, err = fs.Sub(ui.Index, "frontend/templates")
-	if err != nil {
-		panic(err)
-	}
-
 	log.Println("tryin spinnin")
 
 	// registering the handlers, and making url paths
@@ -46,7 +40,7 @@ func main() {
 	fmt.Println("CTRL + C to stop spinnin n shit")
 
 	// starting server
-	err = http.ListenAndServe(":8008", nil)
+	err := http.ListenAndServe(":8008", nil)
 	if err != nil {
 		log.Fatal(err)
 	}

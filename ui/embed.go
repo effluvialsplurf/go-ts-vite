@@ -4,5 +4,6 @@ import (
 	"embed"
 )
 
-//go:embed frontend/templates/*
+//go:embed frontend/dist/*
+//go:embed frontend/dist/index.html
 var Index embed.FS
