@@ -16,12 +16,20 @@ func loadApp(w http.ResponseWriter, r *http.Request) {
 	http.StripPrefix("/app", http.FileServerFS(app)).ServeHTTP(w, r)
 }
 
-func templateHandler(w http.ResponseWriter, r *http.Request) {
-	templ := template.Must(template.ParseFiles("./ui/templates/index.html"))
+func makeTemplateHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		templDir := "./ui/templates/"
+		filename := "index"
+		if r.URL.Path != "/" {
+			filename = r.URL.Path
+		}
 
-	err := templ.Execute(w, nil)
-	if err != nil {
-		log.Panic(err)
+		templ := template.Must(template.ParseFiles(templDir + filename + ".html"))
+
+		err := templ.Execute(w, nil)
+		if err != nil {
+			log.Panic(err)
+		}
 	}
 }
 
@@ -29,7 +37,7 @@ func muxInit() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/app/", loadApp)
-	mux.HandleFunc("/", templateHandler)
+	mux.HandleFunc("/", makeTemplateHandler())
 
 	return mux
 }
