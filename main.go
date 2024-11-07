@@ -5,23 +5,31 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
+	"text/template"
 )
 
-func makeHandler(str string, pre string) http.HandlerFunc {
-	sub, err := fs.Sub(ui.Index, str)
+func loadApp(w http.ResponseWriter, r *http.Request) {
+	app, err := fs.Sub(ui.Index, "frontend/dist")
 	if err != nil {
 		log.Panicln(err)
 	}
-	return func(w http.ResponseWriter, r *http.Request) {
-		http.StripPrefix(pre, http.FileServerFS(sub)).ServeHTTP(w, r)
+	http.StripPrefix("/app", http.FileServerFS(app)).ServeHTTP(w, r)
+}
+
+func templateHandler(w http.ResponseWriter, r *http.Request) {
+	templ := template.Must(template.ParseFiles("./ui/templates/index.html"))
+
+	err := templ.Execute(w, nil)
+	if err != nil {
+		log.Panic(err)
 	}
 }
 
 func muxInit() *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", makeHandler("staticPages", "/"))
-	mux.HandleFunc("/app/", makeHandler("frontend/dist", "/app"))
+	mux.HandleFunc("/app/", loadApp)
+	mux.HandleFunc("/", templateHandler)
 
 	return mux
 }
