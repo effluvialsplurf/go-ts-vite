@@ -16,3 +16,11 @@ createRoot(document.getElementById('root')!).render(
     <AIHome />
   </StrictMode>,
 )
+
+import SnakeGame from './SnakeGame.tsx'
+
+createRoot(document.getElementById('snakeGame')!).render(
+  <StrictMode>
+    <SnakeGame />
+  </StrictMode>
+)
