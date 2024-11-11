@@ -17,10 +17,12 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
-import SnakeGame from './SnakeGame.tsx'
+// import SnakeGame from './SnakeGame.tsx'
 
-createRoot(document.getElementById('snakeGame')!).render(
-  <StrictMode>
-    <SnakeGame />
-  </StrictMode>
-)
+// createRoot(document.getElementById('snakeGame')!).render(
+//  <StrictMode>
+//    <SnakeGame />
+//  </StrictMode>
+// )
+
+
