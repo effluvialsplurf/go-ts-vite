@@ -1,28 +1,18 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-//import App from './App.tsx'
-
-//createRoot(document.getElementById('root')!).render(
-//  <StrictMode>
-//    <App />
-//  </StrictMode>,
-//)
-
-import AIHome from './AIHome.tsx'
+import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <AIHome />
-  </StrictMode>,
+ <StrictMode>
+   <App />
+ </StrictMode>,
 )
 
-// import SnakeGame from './SnakeGame.tsx'
+// import AIHome from './AIHome.tsx'
 
-// createRoot(document.getElementById('snakeGame')!).render(
-//  <StrictMode>
-//    <SnakeGame />
-//  </StrictMode>
+// createRoot(document.getElementById('root')!).render(
+//   <StrictMode>
+//     <AIHome />
+//   </StrictMode>,
 // )
-
-
